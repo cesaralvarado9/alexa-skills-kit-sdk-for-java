@@ -28,7 +28,7 @@ public class DefaultRequestMapper implements RequestMapper {
     protected final List<DefaultRequestHandlerChain> handlerChains;
 
     protected DefaultRequestMapper(List<DefaultRequestHandlerChain> handlerChains) {
-        this.handlerChains = ValidationUtils.assertNotEmpty(handlerChains, "handlerChains");
+        this.handlerChains = ValidationUtils.assertNotNull(handlerChains, "handlerChains");
     }
 
     public static Builder builder() {

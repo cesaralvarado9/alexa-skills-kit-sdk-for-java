@@ -22,6 +22,7 @@ import com.amazon.ask.dispatcher.request.handler.impl.DefaultRequestHandlerChain
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.dispatcher.request.handler.RequestHandlerChain;
+import java.util.ArrayList;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -30,6 +31,7 @@ import java.util.UUID;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -37,8 +39,17 @@ import static org.mockito.Mockito.when;
 public class DefaultRequestMapperTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void no_handlers_throws_illegal_argument_exception() {
+    public void no_handler_list_throws_illegal_argument_exception() {
         DefaultRequestMapper.builder().build();
+    }
+
+    @Test
+    public void empty_handler_list_does_not_throws_illegal_argument_exception() {
+        try {
+            DefaultRequestMapper.builder().withRequestHandlerChains(new ArrayList<>()).build();
+        } catch(IllegalArgumentException ex) {
+            fail("Exception should have not been thrown: " + ex.toString());
+        }
     }
 
     @Test
